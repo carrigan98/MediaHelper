@@ -14,7 +14,7 @@ for root, subFolders, files in os.walk(rootdir):
             fileList.append(theFile)
 
 while fileList:
-inFile = fileList.pop()
+    inFile = fileList.pop()
     fileName, fileExtension = os.path.splitext(inFile)
     outFile = fileName+'.mp4'
  
