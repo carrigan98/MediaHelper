@@ -1,0 +1,11 @@
+#!/bin/bash
+{
+    # If media is a CD
+    if [ $ID_CDROM_MEDIA_CD -eq 1 ]; then
+        sudo -u carrigan /bin/bash /usr/bin/abcde | tee /home/carrigan/logs/abcde.log &
+    fi
+    # If media is a DVD
+    if [ $ID_CDROM_MEDIA_DVD -eq 1 ]; then
+        sudo -u carrigan /usr/bin/python /home/carrigan/autorippr/autorippr.py --rip --debug &
+    fi
+}
