@@ -2,9 +2,24 @@ import os
 import time
 import subprocess
 import sys
+import argparse
  
+parser = argparse.ArgumentParser(description="File conversion script")
+parser.add_argument('-i','--input',help='The root source that will be converted')
+parser.add_argument('-nd','--nodelete',help='Do not delete file after conversion')
+ 
+args = vars(parser.parse_args())
+delete = True
 fileList = []
-rootdir = raw_input("Root Dir: ")
+
+if (args['input']):
+	rootdir = (str(args['input']))
+else:
+	rootdir = raw_input("Root Dir: ")
+	
+if (args['nodelete']):
+	delete = False
+
 for root, subFolders, files in os.walk(rootdir):
     for file in files:
         theFile = os.path.join(root,file)
@@ -37,7 +52,9 @@ while fileList:
         print '"HandBrakeCLI (compress) returned status code: %d" % proc.returncode'
 
     time.sleep(5)
-    print "Removing %s" % inFile
-    os.remove(inFile)
+    if delete:
+		if os.path.isfile(outFile):
+			print "Removing %s" % inFile
+			os.remove(inFile)
 
 print 'Reached EOF'
